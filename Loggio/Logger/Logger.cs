@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.HellStormGames.Diagnostics.Logging
 {
-    public sealed class Logger : ILogger, ILoggioListener, IDisposable
+    public sealed class Logger : ILogger, ISubscriber, IDisposable
     {
-        readonly ILoggioListener listener;
+        readonly ISubscriber listener;
         readonly Action? dispose;
-        public Logger(ILoggioListener Listener, Action dispose)
+        public Logger(ISubscriber Listener, Action dispose)
         {
             this.listener = Listener;
             this.dispose = dispose;
@@ -26,7 +26,7 @@ namespace com.HellStormGames.Diagnostics.Logging
             Write(LoggioEventType.INFO, tag, message);
         }
 
-        public void Info(Exception exception, string tag, string message)
+        public void Info(Exception? exception, string tag, string message)
         {
             Write(LoggioEventType.INFO, exception, tag, message);
         }
@@ -41,7 +41,7 @@ namespace com.HellStormGames.Diagnostics.Logging
             Write(LoggioEventType.WARNING, tag, message);
         }
 
-        public void Warn(Exception exception, string tag, string message)
+        public void Warn(Exception? exception, string tag, string message)
         {
             Write(LoggioEventType.WARNING, exception, tag, message);
         }
@@ -56,7 +56,7 @@ namespace com.HellStormGames.Diagnostics.Logging
             Write(LoggioEventType.ERROR, tag, message);
         }
 
-        public void Error(Exception exception, string tag, string message)
+        public void Error(Exception? exception, string tag, string message)
         {
             Write(LoggioEventType.ERROR, exception, tag, message);
         }
@@ -71,7 +71,7 @@ namespace com.HellStormGames.Diagnostics.Logging
             Write(LoggioEventType.FATAL, tag, message);
         }
 
-        public void Fatal(Exception exception, string tag, string message)
+        public void Fatal(Exception? exception, string tag, string message)
         {
             Write(LoggioEventType.FATAL, exception, tag, message);
 
@@ -89,13 +89,13 @@ namespace com.HellStormGames.Diagnostics.Logging
             Send(loggioEvent);
         }
         
-        public void Write(LoggioEventType eventtype, Exception exception, string tag, string message)
+        public void Write(LoggioEventType eventtype, Exception? exception, string tag, string message)
         {
             var loggioEvent = new LoggioEvent(DateTimeOffset.Now, eventtype, tag, message, exception);
             Send(loggioEvent);
         }
 
-        void ILoggioListener.Invoke(LoggioEvent loggioEvent)
+        void ISubscriber.Invoke(LoggioEvent loggioEvent)
         {
             Send(loggioEvent);
         }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace com.HellStormGames.Diagnostics.Logging
 {
-    public interface ILoggioListener
+    public interface ISubscriberConfiguration
     {
-        void Invoke(LoggioEvent loggioEvent);
+
     }
 }

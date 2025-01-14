@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggio", "Loggio\Loggio.csproj", "{13CA215C-748E-47AB-A8D9-779DE72D232A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample01-HelloLoggio", "Samples\Sample01-HelloLoggio\Sample01-HelloLoggio.csproj", "{F973FA0D-B8EE-4DA4-91BA-4F815F896757}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13CA215C-748E-47AB-A8D9-779DE72D232A} = {13CA215C-748E-47AB-A8D9-779DE72D232A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{13CA215C-748E-47AB-A8D9-779DE72D232A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13CA215C-748E-47AB-A8D9-779DE72D232A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13CA215C-748E-47AB-A8D9-779DE72D232A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F973FA0D-B8EE-4DA4-91BA-4F815F896757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F973FA0D-B8EE-4DA4-91BA-4F815F896757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F973FA0D-B8EE-4DA4-91BA-4F815F896757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F973FA0D-B8EE-4DA4-91BA-4F815F896757}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

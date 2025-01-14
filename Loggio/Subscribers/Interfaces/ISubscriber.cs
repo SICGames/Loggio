@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.HellStormGames.Diagnostics
+namespace com.HellStormGames.Diagnostics.Logging
 {
-    [Flags]
-    public enum LogTargets
+    public interface ISubscriber
     {
-        None = 0,
-        File = 2,
-        Console = 4
+        void Invoke(LoggioEvent loggioEvent);
     }
 }

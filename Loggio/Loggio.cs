@@ -9,26 +9,23 @@ using com.HellStormGames.Diagnostics.Logging;
 namespace com.HellStormGames.Diagnostics
 {
     /// <summary>
-    /// Usages:
-    /// // Configure() alone sets everything to default.
-    /// var l = new Loggio().Configure().AllowAppending(true).SetVerboseLevel(VerboseLevel.MINIMAL).SetLogFileType(FileType.JSON);
-    /// l.Info("Hello World!");
-    /// try 
-    /// {
-    ///     l.Info("Trying to be cool just like you!");
-    /// } 
-    /// catch(Exception ex) 
-    /// {
-    ///     // Error Replaces Verbose to FULL when writing out.
-    ///     l.Error("Arggg! I died a horrible death!");
-    /// }
-    /// Can use Configure().SetLogTargets(LogTargets.File | LogTargets.Console) to write both to file and console.
+    /// Usages:<br/>
+    /// //-- ALl events goes to debug output window while debugging.
+    /// Loggio.Logger = new LoggioConfiguration().SubscribeTo.DebugOutput().CreateLogger();<br/>
+    /// Loggio.Info("I am alive!");<br/>
+    /// var eggs = new List<float>();<br/>
+    /// try { <br/>
+    ///     eggs[13] = 1.0f; <br/>
+    /// } <br/>
+    /// catch(Exception ex) { <br/>
+    ///     Loggio.Error(ex, "Bad Easter Bunny","Something happened and it's sad."); <br/>
+    /// } <br/>
     /// </summary>
     
     public class Loggio 
     {
-        static ILogger _logger = null;
-        public static ILogger Logger
+        static ILogger? _logger = null;
+        public static ILogger? Logger
         {
             get => _logger;
             set => _logger = value; 
@@ -36,46 +33,46 @@ namespace com.HellStormGames.Diagnostics
 
         public static void Shutdown()
         {
-            (_logger as  IDisposable).Dispose();    
+            (_logger as  IDisposable)?.Dispose();    
         }
 
         public static void Write(LoggioEventType eventType, string message)
         {
-            _logger.Write(eventType, message);
+            _logger?.Write(eventType, message);
         }
         public static void Write(LoggioEventType eventType, string tag, string message)
         {
-            _logger.Write(eventType, tag, message);
+            _logger?.Write(eventType, tag, message);
         }
         public static void Write(LoggioEventType eventType, string tag, string message, Exception exception)
         {
-            _logger.Write(eventType, exception, tag, message);
+            _logger?.Write(eventType, exception, tag, message);
         }
 
         public static void Info(string message)
         {
-            _logger.Info(message);  
+            _logger?.Info(message);  
         }
         public static void Info(string tag, string message)
         {
-            _logger.Info(tag, message);
+            _logger?.Info(tag, message);
         }
         public static void Info(Exception exception,string tag, string message)
         {
-            _logger.Info(exception, tag, message);
+            _logger?.Info(exception, tag, message);
         }
 
         public static void Warn(string message)
         {
-            _logger.Warn(message);
+            _logger?.Warn(message);
         }
         public static void Warn(string tag, string message)
         {
-            _logger.Warn(tag, message);
+            _logger?.Warn(tag, message);
         }
         public static void Warn(Exception exception,  string tag, string message)
         {
-            _logger.Warn(exception, tag, message);  
+            _logger?.Warn(exception, tag, message);  
         }
 
         public static void Error(string message)

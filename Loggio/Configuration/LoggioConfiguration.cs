@@ -10,17 +10,17 @@ namespace com.HellStormGames.Diagnostics
     public class LoggioConfiguration
     {
         #region Declaration Fields
-        readonly List<ILoggioListener> listeners = new List<ILoggioListener>();
+        readonly List<ISubscriber>? subscribers = [];
         bool createdLogger = false;
 
-        public LoggioListenerConfiguration WriteTo { get; private set; }
+        public LoggioSubscriberConfiguration SubscribeTo { get; private set; }
 
         #endregion
         public LoggioConfiguration()
         {
             try
             {
-                WriteTo = new LoggioListenerConfiguration(this, s => listeners.Add(s));
+                SubscribeTo = new LoggioSubscriberConfiguration(this, s => subscribers.Add(s));
             }
             catch (Exception ex)
             {
@@ -34,21 +34,22 @@ namespace com.HellStormGames.Diagnostics
 
             createdLogger = true;
 
-            ILoggioListener loggioListener = null;
-            if (listeners.Count > 0)
+            ISubscriber? subscriber = null;
+            if (subscribers?.Count > 0)
             {
-                loggioListener = new LoggioSafeListener(listeners);
+                subscriber = new SafeAggregateSubscriber(subscribers);
             }
-            var _disposeableListeners = listeners.Where(s => s is IDisposable).ToArray();
+            var _disposeablesubscribers = subscribers?.Where(s => s is IDisposable).ToArray();
 
             void Dispose()
             {
-                foreach (var listener in _disposeableListeners)
+                foreach (var listener in _disposeablesubscribers)
                 {
                     (listener as IDisposable)?.Dispose();
                 }
             }
-            return new Logger(loggioListener, Dispose);
+
+            return new Logger(subscriber, Dispose);
         }
     }
 }

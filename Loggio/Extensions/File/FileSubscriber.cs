@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace com.HellStormGames.Diagnostics.Logging
 {
-    public class LoggioFileListener : ILoggioListener, IDisposable
+    public class FileSubscriber : ISubscriber, IDisposable
     {
         readonly StreamWriter StreamWriter;
         readonly string File;
         readonly object syncroot = new object();
 
-        public LoggioFileListener(string file)
+        public FileSubscriber(string file)
         {
             if (String.IsNullOrEmpty(file)) throw new ArgumentNullException(nameof(file));
             var directory = Path.GetDirectoryName(file);

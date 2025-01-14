@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.HellStormGames.Diagnostics
+namespace com.HellStormGames.Diagnostics.Logging
 {
 
     /// <summary>
@@ -12,10 +12,10 @@ namespace com.HellStormGames.Diagnostics
     /// NORMAL outputs message, log type, date, and origin class.<br/>
     /// FULL outputs message, log type, date, origin class, function name and line number.
     /// </summary>
-    public enum VerboseLevel
+    public static class LoggioLoggingLevel
     {
-        MINIMAL = 0,
-        NORMAL = 1,
-        FULL = 2
+        public const LoggioEventType Minimal = LoggioEventType.DEBUG;
+        public const LoggioEventType Normal = LoggioEventType.INFO;
+        public const LoggioEventType Maximum = LoggioEventType.FATAL;
     }
 }
