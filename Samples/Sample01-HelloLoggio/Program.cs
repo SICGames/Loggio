@@ -14,7 +14,8 @@ namespace Sample01_HelloLoggio
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Loggio.Logger = new LoggioConfiguration().SubscribeTo.DebugOutput(LoggioEventType.INFO).CreateLogger();
+            Loggio.Logger = new LoggioConfiguration().SubscribeTo.DebugOutput().
+                SubscribeTo.File("log.txt").CreateLogger();
             Loggio.Info("Starting Application....");
             Application.Run(new Form1());
         }

@@ -8,6 +8,7 @@ namespace com.HellStormGames.Diagnostics
 {
     public enum LoggioEventType
     {
+        VERBOSE,
         DEBUG,
         INFO,
         WARNING,

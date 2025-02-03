@@ -74,7 +74,6 @@ namespace com.HellStormGames.Diagnostics.Logging
         public void Fatal(Exception? exception, string tag, string message)
         {
             Write(LoggioEventType.FATAL, exception, tag, message);
-
         }
         
         public void Write(LoggioEventType eventtype, string message)
@@ -83,9 +82,9 @@ namespace com.HellStormGames.Diagnostics.Logging
             Send(loggioEvent);
         }
 
-        public void Write(LoggioEventType eventtype, string tage, string message)
+        public void Write(LoggioEventType eventtype, string tag, string message)
         {
-            var loggioEvent = new LoggioEvent(DateTimeOffset.Now, eventtype, tage, message, null);
+            var loggioEvent = new LoggioEvent(DateTimeOffset.Now, eventtype, tag, message, null);
             Send(loggioEvent);
         }
         

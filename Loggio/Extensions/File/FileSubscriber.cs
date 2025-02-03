@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,9 @@ namespace com.HellStormGames.Diagnostics.Logging
         public FileSubscriber(string file)
         {
             if (String.IsNullOrEmpty(file)) throw new ArgumentNullException(nameof(file));
+
             var directory = Path.GetDirectoryName(file);
+
             if (!String.IsNullOrEmpty(directory))
             {
                 if (!Directory.Exists(directory))
@@ -46,10 +49,22 @@ namespace com.HellStormGames.Diagnostics.Logging
             //-- write to file.
             lock (syncroot)
             {
-                var str = $"[{loggioEvent.DateTimeOffset.ToString(@"yyyy-MM-dd HH:mm:ss")}]" +
-                    $"[{loggioEvent.LogType.ToString()}][{loggioEvent.Tag}] {loggioEvent.Message}\n";
-                StreamWriter.Write(str, 0, str.Length);
+                string tag = String.IsNullOrEmpty(loggioEvent.Tag) ? "" : $"[{loggioEvent.Tag}]";
+                string exceptionString = String.Empty;
+                if (loggioEvent.Exception != null)
+                {
+                    var loggioEx = loggioEvent.Exception;
+                    StackTrace stackTrace = new StackTrace(loggioEx, true);
+                    StackFrame? frame = stackTrace.GetFrames().Where(f => f.GetFileName() != null).FirstOrDefault();
 
+                    exceptionString = $"\n\t Exception Information: \n\t\t Type: {loggioEx.GetType()}\n\t\t Message: {loggioEx.Message}\n\t\t" +
+                        $" Method Name: {frame?.GetMethod()?.Name}\n\t\t Line: {frame?.GetFileLineNumber()}.\n\t\t Source File: {frame?.GetFileName()}\n";
+                }
+
+                var str = $"[{loggioEvent.DateTimeOffset.ToString(@"yyyy-MM-dd HH:mm:ss")}] " +
+                        $"[{loggioEvent.LogType.ToString()}] {tag} => {loggioEvent.Message}\n{exceptionString}";
+
+                StreamWriter.Write(str, 0, str.Length);
             }
         }
     }
